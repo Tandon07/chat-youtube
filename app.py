@@ -125,23 +125,12 @@ def get_text_chunks(text):
     chunks = text_splitter.split_text(text)
     return chunks
 
-
-from sentence_transformers import SentenceTransformer
-
-# def get_vectorstore(text_chunks):
-#     model_name = "hkunlp/instructor-large"
-#     embeddings = HuggingFaceInstructEmbeddings(model_name=model_name)
-#     vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
-#     return vectorstore
-
-from transformers import AutoTokenizer, AutoModel
 def get_vectorstore(text_chunks):
     embeddings = HuggingFaceInstructEmbeddings(
         query_instruction="Represent the query for retrieval: "
     )
     vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
     return vectorstore
-
 
 def get_conversation_chain(vectorstore):
     # model_name = "google/flan-t5-small"
